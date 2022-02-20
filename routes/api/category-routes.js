@@ -76,8 +76,14 @@ router.delete('/:id', (req, res) => {
       id: req.params.id,
     },
   })
-    .then((categoryData) => res.json(categoryData))
-    .catch((err) => {
+  .then((categoryData) => {
+    if (!categoryData) {
+      res.status(404).json({ message: "No category found with this id" });
+      return;
+    }
+    res.json(categoryData);
+  })
+      .catch((err) => {
       console.log(err);
       res.status(500).json(err);
     });

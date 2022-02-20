@@ -129,17 +129,15 @@ router.put('/:id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
   // delete one product by its `id` value
-  let deletedProduct = Product.findByPk(req.params.id);
   Product.destroy({
     where: {
       id: req.params.id,
     },
   })
     .then((productData) => res.json(productData))
-    .then(res.json(`${deletedProduct} was removed from the database`))
     .catch((err) => {
       console.log(err);
-      res.status(500).json(err);
+      return res.status(500).json(err);
     });
 });
 
